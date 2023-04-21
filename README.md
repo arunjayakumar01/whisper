@@ -145,3 +145,26 @@ Please use the [🙌 Show and tell](https://github.com/openai/whisper/discussion
 ## License
 
 Whisper's code and model weights are released under the MIT License. See [LICENSE](https://github.com/openai/whisper/blob/main/LICENSE) for further details.
+
+
+
+
+
+Gradio makes possible to easily test openai/whisper locally with a script like this:
+
+in docker:
+cat <<EOF > /tmp/docker-init.sh
+apt update && apt install python3-pip ffmpeg git -y
+git clone https://gist.github.com/kpe/6a70395ce171ffee43d927eaf90b81b6 /tmp/whisper
+cd /tmp/whisper
+pip3 install -r requirements.txt
+python3 -m whisper_demo
+EOF
+docker run -ti --rm --name whisper -p 7860:7860/tcp -v /tmp/docker-init.sh:/tmp/init.sh ubuntu /bin/bash --rcfile /tmp/init.sh
+or an ubuntu VM (i.e. on Windows with WSL: wsl --install -d ubuntu):
+sudo apt update && sudo apt install python3-pip3 ffmpeg git -y
+git clone https://gist.github.com/kpe/6a70395ce171ffee43d927eaf90b81b6 /tmp/whisper
+cd /tmp/whisper
+pip3 install -r requirements.txt
+python3 -m whisper_demo
+
